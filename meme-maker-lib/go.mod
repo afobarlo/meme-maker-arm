@@ -1,5 +1,7 @@
 module meme-maker-lib
 
-go 1.21.6
+go 1.23.1
 
-require gopkg.in/gographics/imagick.v3 v3.5.1
+require (
+	gopkg.in/gographics/imagick.v2 v2.7.0
+)

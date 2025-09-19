@@ -6,7 +6,7 @@ import (
 	"runtime"
 	"strings"
 
-	imagick "gopkg.in/gographics/imagick.v3/imagick"
+	imagick "gopkg.in/gographics/imagick.v2/imagick"
 )
 
 type CaptionArgs struct {
