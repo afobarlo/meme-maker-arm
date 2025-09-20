@@ -46,8 +46,6 @@ func fileNameWithoutExtension(fileName string) string {
 func (c *Caption) AddCaption(args CaptionArgs) error {
 	c.args = args
 	c.wands = CaptionWands{}
-	imagick.Initialize()
-	defer imagick.Terminate()
 	c.wands.mw = imagick.NewMagickWand()
 	c.wands.pw = imagick.NewPixelWand()
 	if e := c.wands.mw.ReadImage(c.args.FilePath); e != nil {
@@ -71,6 +69,10 @@ func (c *Caption) AddCaption(args CaptionArgs) error {
 	if e := c.writeImage(); e != nil {
 		return e
 	}
+	c.wands.mw.Destroy()
+	c.wands.pw.Destroy()
+	c.wands.dw.Destroy()
+	c.wands.bottomDW.Destroy()
 	return nil
 }
 
@@ -239,12 +241,11 @@ func (c *Caption) splitCaption(dw *imagick.DrawingWand, caption string) []string
 }
 
 func ListFonts(font string) {
-	imagick.Initialize()
-	defer imagick.Terminate()
 	mw := imagick.NewMagickWand()
 	font += "*"
 	array := mw.QueryFonts(font)
 	for _, element := range array {
 		fmt.Println(element)
 	}
+	mw.Destroy()
 }
